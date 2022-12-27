@@ -20,27 +20,25 @@ class Board
     @player_move = gets.chomp.to_i
   end
 
-  def mark_player_move(move)
-    if @first_line.include?(move)
-      move_index = @first_line.find_index(move)
-      @first_line[move_index] = 'X'
-    end
-    # puts 'marked player move'
+  def get_CPU_move
+    cpu_move =  rand(1..9)
   end
 
-  # def get_CPU_move
-  #   cpu_move =  rand(1..9)
-  # end
+  def mark(move, gamer)
+    gamer == 'player' ? marker = 'X' : marker = 'O'
+    if @first_line.include?(move)
+      move_index = @first_line.find_index(move)
+      @first_line[move_index] = marker
+    end
+  end
 
 end
 
 board = Board.new
 p board.first_line, board.second_line, board.third_line
 player_move = board.get_player_move
-board.mark_player_move(player_move)
+board.mark(player_move, 'player')
 p board.first_line
-
-
 
 # @first_row = [@first_line[0], @second_line[0], @third_line[0]]
 # @second_row = [@first_line[1], @second_line[1], @third_line[1]]
