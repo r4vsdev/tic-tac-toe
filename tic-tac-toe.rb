@@ -20,32 +20,31 @@ class Board
 
   def get_player_move
     puts 'Choose from 1-9 to make your move'
-    player_move = gets
+    @player_move = gets.chomp
+    return @player_move
   end
 
-  def get_CPU_move
-    cpu_move =  rand(1..9)
-  end
+  # def get_CPU_move
+  #   cpu_move =  rand(1..9)
+  # end
 
-  def mark_player_move(move)
-    if move.between?(1,3)
-      move_index = board.firstline.find_index(move)
-      board.first_line[move_index] = 'X'
-    end
-    # puts 'marked player move'
-  end
+  # def mark_player_move(move)
+  #   if move.between?(1,3)
+  #     move_index = board.firstline.find_index(move)
+  #     board.first_line[move_index] = 'X'
+  #   end
+  #   # puts 'marked player move'
+  # end
 
 end
-
-
-
-
-
 
 
 board = Board.new
 
 p board.first_line, board.second_line, board.third_line
+player_move = board.get_player_move
+# p player_move
+
 
 
 # @first_line  = [1, 2, 3]
