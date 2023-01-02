@@ -1,11 +1,16 @@
 class Board
   attr_accessor :available
-  attr_reader :first_line, :second_line, :third_line
+  attr_reader :first_line, :second_line, :third_line, :matrix
 
   def initialize
-    @first_line  = ["1", "2", "3"]
-    @second_line = ["4", "5", "6"]
-    @third_line  = ["7", "8", "9"]
+    @matrix = [
+      ["1", "2", "3"],
+      ["4", "5", "6"],
+      ["7", "8", "9"],
+    ]
+    @first_line  = @matrix[0]
+    @second_line = @matrix[1]
+    @third_line  = @matrix[2]
     @available = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
     @game_over = false
   end
@@ -35,36 +40,30 @@ class Board
 
   def mark(move, gamer)
     gamer == 'player' ? marker = 'X' : marker = 'O'
-    if @first_line.include?(move)
-      move_index = @first_line.find_index(move)
-      @first_line[move_index] = marker
-    end
 
-    if @second_line.include?(move)
-      move_index = @second_line.find_index(move)
-      @second_line[move_index] = marker
-    end
-
-    if @third_line.include?(move)
-      move_index = @third_line.find_index(move)
-      @third_line[move_index] = marker
+    for line in @matrix do
+      if line.include?(move)
+        move_index = line.find_index(move)
+        line[move_index] = marker
+      end
     end
   end
 
+  def is_it_over?
+    # if @first_line == Array.new(3, "X") || @first_line == Array.new(3, "O")
+
+  end
 end
 
 board = Board.new
-# p board.available
 
 until @game_over do
   board.print
   player_move = board.get_player_move
-  puts "available = #{board.available}"
   board.mark(player_move, 'player')
   cpu_move = board.get_CPU_move
   p cpu_move
   board.mark(cpu_move, 'cpu')
-  puts "available = #{board.available}"
 end
 
 # @first_row = [@first_line[0], @second_line[0], @third_line[0]]
