@@ -1,6 +1,6 @@
 class Board
   attr_accessor :available
-  attr_reader :first_line, :second_line, :third_line, :matrix
+  attr_reader :matrix, :game_over
 
   def initialize
     @matrix = [
@@ -8,18 +8,18 @@ class Board
       ["4", "5", "6"],
       ["7", "8", "9"],
     ]
-    @first_line  = @matrix[0]
-    @second_line = @matrix[1]
-    @third_line  = @matrix[2]
     @available = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
     @game_over = false
   end
 
   def print
-    p first_line, second_line, third_line
+    p @matrix[0], @matrix[1], @matrix[2]
   end
 
   def get_player_move
+    if @game_over
+      return "O won"
+    end
     puts 'Choose from 1-9 to make your move'
     @player_move = gets.chomp
 
@@ -33,6 +33,9 @@ class Board
   end
 
   def get_CPU_move
+    if @game_over
+      return "X won"
+    end
     @cpu_move = @available.sample
     @available.delete(@cpu_move)
     return @cpu_move
@@ -50,17 +53,37 @@ class Board
   end
 
   def is_it_over?
-    # if @first_line == Array.new(3, "X") || @first_line == Array.new(3, "O")
-
+    for line in @matrix do
+      if line.minmax.reduce(&:eql?)
+        @game_over = true
+        puts "Game Over"
+      end
+    end
+    for line in @matrix.transpose do
+      if line.minmax.reduce(&:eql?)
+        @game_over = true
+        puts "Game Over"
+      end
+    end
+    if @matrix[0][0] == @matrix[1][1] && @matrix[1][1] == @matrix[2][2]
+      @game_over = true
+      puts "Game Over"
+    end
+    if @matrix[0][2] == @matrix[1][1] && @matrix[1][1] == @matrix[2][0]
+      @game_over = true
+      puts "Game Over"
+    end
   end
+
 end
 
 board = Board.new
 
-until @game_over do
+until board.game_over do
   board.print
   player_move = board.get_player_move
   board.mark(player_move, 'player')
+  board.is_it_over?
   cpu_move = board.get_CPU_move
   p cpu_move
   board.mark(cpu_move, 'cpu')
