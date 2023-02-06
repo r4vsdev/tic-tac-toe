@@ -12,16 +12,37 @@ class Board
     @game_over = false
   end
 
-  def print
-    p @matrix[0], @matrix[1], @matrix[2]
+  def print_it
+    # p @matrix[0], @matrix[1], @matrix[2]
+    # puts ""
+    print @matrix[0][0]
+    print "  |  "
+    print @matrix[0][1]
+    print "  |  "
+    puts @matrix[0][2]
+
+    puts "-------------"
+
+    print @matrix[1][0]
+    print "  |  "
+    print @matrix[1][1]
+    print "  |  "
+    puts @matrix[1][2]
+
+    puts "-------------"
+
+    print @matrix[2][0]
+    print "  |  "
+    print @matrix[2][1]
+    print "  |  "
+    puts @matrix[2][2]
   end
 
   def get_player_move
-    if @game_over
-      return "O won"
-    end
+    puts ""
     puts 'Choose from 1-9 to make your move'
     @player_move = gets.chomp
+    puts ""
 
     if @available.include?(@player_move)
       @available.delete(@player_move)
@@ -67,8 +88,7 @@ class Board
         puts ""
         puts "Game Over, #{winner} won"
         puts ""
-        self.print
-        return true
+        self.print_it
       end
     end
     for line in @matrix.transpose do
@@ -78,7 +98,7 @@ class Board
         puts ""
         puts "Game Over, #{winner} won"
         puts ""
-        self.print
+        self.print_it
       end
     end
     if @matrix[0][0] == @matrix[1][1] && @matrix[1][1] == @matrix[2][2]
@@ -87,7 +107,7 @@ class Board
       puts ""
       puts "Game Over, #{winner} won"
       puts ""
-      self.print
+      self.print_it
     end
     if @matrix[0][2] == @matrix[1][1] && @matrix[1][1] == @matrix[2][0]
       @game_over = true
@@ -95,7 +115,7 @@ class Board
       puts ""
       puts "Game Over, #{winner} won"
       puts ""
-      self.print
+      self.print_it
     end
   end
 
@@ -104,7 +124,7 @@ end
 board = Board.new
 
 until board.game_over do
-  board.print
+  board.print_it
   player_move = board.get_player_move
   board.mark(player_move, 'player')
   board.is_it_over?
