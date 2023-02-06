@@ -34,7 +34,11 @@ class Board
 
   def get_CPU_move
     if @game_over
-      return "X won"
+      return ""
+    end
+    if @available.length == 0
+      @game_over = true
+      return "Draw"
     end
     @cpu_move = @available.sample
     @available.delete(@cpu_move)
@@ -53,25 +57,45 @@ class Board
   end
 
   def is_it_over?
+    if @game_over == true
+      return
+    end
     for line in @matrix do
       if line.minmax.reduce(&:eql?)
         @game_over = true
-        puts "Game Over"
+        winner = line[0]
+        puts ""
+        puts "Game Over, #{winner} won"
+        puts ""
+        self.print
+        return true
       end
     end
     for line in @matrix.transpose do
       if line.minmax.reduce(&:eql?)
         @game_over = true
-        puts "Game Over"
+        winner = line[0]
+        puts ""
+        puts "Game Over, #{winner} won"
+        puts ""
+        self.print
       end
     end
     if @matrix[0][0] == @matrix[1][1] && @matrix[1][1] == @matrix[2][2]
       @game_over = true
-      puts "Game Over"
+      winner = @matrix[0][0]
+      puts ""
+      puts "Game Over, #{winner} won"
+      puts ""
+      self.print
     end
     if @matrix[0][2] == @matrix[1][1] && @matrix[1][1] == @matrix[2][0]
       @game_over = true
-      puts "Game Over"
+      winner = @matrix[0][2]
+      puts ""
+      puts "Game Over, #{winner} won"
+      puts ""
+      self.print
     end
   end
 
@@ -85,13 +109,7 @@ until board.game_over do
   board.mark(player_move, 'player')
   board.is_it_over?
   cpu_move = board.get_CPU_move
-  p cpu_move
+  # puts cpu_move
   board.mark(cpu_move, 'cpu')
+  board.is_it_over?
 end
-
-# @first_row = [@first_line[0], @second_line[0], @third_line[0]]
-# @second_row = [@first_line[1], @second_line[1], @third_line[1]]
-# @third_row = [@first_line[2], @second_line[2], @third_line[2]]
-
-# @diagonal1 = [@first_line[0], @second_line[1], third_line[2]]
-# @diagonal2 = [@first_line[2], @second_line[1], third_line[0]]
