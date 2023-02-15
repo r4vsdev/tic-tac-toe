@@ -20,11 +20,6 @@ class Board
     print_line(2)
   end
 
-  def print_line(num)
-    print @matrix[num][0], '  |  ', @matrix[num][1], '  |  '
-    puts @matrix[num][2], '-------------'
-  end
-
   def player_move
     puts 'Choose from 1-9 to make your move'
     @player_move = gets.chomp
@@ -67,6 +62,13 @@ class Board
     columns_equal?
     first_diagonal_equal?
     second_diagonal_equal?
+  end
+
+  private
+
+  def print_line(num)
+    print @matrix[num][0], '  |  ', @matrix[num][1], '  |  '
+    puts @matrix[num][2], '-------------'
   end
 
   def first_diagonal_equal?
