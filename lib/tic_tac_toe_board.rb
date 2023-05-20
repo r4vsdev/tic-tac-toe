@@ -11,12 +11,35 @@ class Board
       %w[7 8 9]
     ]
     @available = %w[1 2 3 4 5 6 7 8 9]
-    @game_over = false
+  end
+
+  def player_turn
+    loop do
+      @guess = verify_input(player_input)
+      break if @guess
+
+      puts 'Input error!'
+    end
+  end
+
+  def verify_input(number)
+    return number if number.match?(/^[1-9]$/)
+  end
+
+  def player_input
+    puts 'Choose a digit between 0 and 9'
+    gets.chomp
   end
 
   def play_game
-    until game_over
-      print_it
+    intro
+    print_board
+
+  end
+
+  def play_game
+    until game_over?
+      print_board
       player_move = player_move
       mark(player_move, 'player')
       over?
@@ -24,12 +47,6 @@ class Board
       mark(cpu_move, 'cpu')
       over?
     end
-  end
-
-  def print_it
-    print_line(0)
-    print_line(1)
-    print_line(2)
   end
 
   def player_move
@@ -78,6 +95,17 @@ class Board
 
   private
 
+  def intro
+    puts 'Lets play tic tac toe'
+    puts 'The game ends whenever we have the same pattern in any direction'
+  end
+
+  def print_board
+    print_line(0)
+    print_line(1)
+    print_line(2)
+  end
+
   def print_line(num)
     print @matrix[num][0], '  |  ', @matrix[num][1], '  |  '
     puts @matrix[num][2], '-------------'
@@ -89,7 +117,7 @@ class Board
     @game_over = true
     winner = @matrix[0][0]
     puts '', "Game Over, #{winner} won", ''
-    print_it
+    print_board
   end
 
   def second_diagonal_equal?
@@ -98,7 +126,7 @@ class Board
     @game_over = true
     winner = @matrix[0][2]
     puts '', "Game Over, #{winner} won", ''
-    print_it
+    print_board
   end
 
   def lines_equal?
@@ -108,7 +136,7 @@ class Board
       @game_over = true
       winner = line[0]
       puts '', "Game Over, #{winner} won", ''
-      print_it
+      print_board
     end
   end
 
@@ -119,7 +147,7 @@ class Board
       @game_over = true
       winner = line[0]
       puts '', "Game Over, #{winner} won", ''
-      print_it
+      print_board
     end
   end
 end
