@@ -34,7 +34,13 @@ class Board
   def play_game
     intro
     print_board
+    turn_order until game_over?
+    final_message
+  end
 
+  def turn_order
+    player_turn
+    cpu_turn
   end
 
   def play_game
@@ -94,6 +100,10 @@ class Board
   end
 
   private
+
+  def final_message
+    puts 'This is the final message'
+  end
 
   def intro
     puts 'Lets play tic tac toe'
