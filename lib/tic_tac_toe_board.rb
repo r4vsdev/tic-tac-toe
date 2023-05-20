@@ -82,11 +82,11 @@ class Board
   end
 
   def game_over?
-    available.empty? ||
-    lines_equal? ||
-    columns_equal? ||
-    first_diagonal_equal? ||
-    second_diagonal_equal?
+    available.empty? # ||
+    # lines_equal? ||
+    # columns_equal? ||
+    # first_diagonal_equal? ||
+    # second_diagonal_equal?
   end
 
   private
