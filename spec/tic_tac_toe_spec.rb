@@ -4,45 +4,21 @@ require_relative '../lib/tic_tac_toe_board'
 
 
 describe Board do
-  context 'when the player wins' do
-    describe '#over?' do
+  describe '#initialize' do
+    subject(:board) { described_class.new }
 
-      subject(:board) { described_class.new }
-
-      it 'works with first row' do
-        allow(board).to receive(:lines_equal).and_return(true)
-        expect(board.game_over).to be_true
+    context 'when matrix_board is initialized' do
+      it 'is a matrix containing 3 arrays' do
+        expect(board.matrix_board.size).to eq(3)
       end
 
-      xit 'works with second row' do
-        
+      it 'contains 9 elements' do
+        expect(board.matrix_board.flatten.size).to eq(9)
       end
 
-      xit 'works with third row' do
-        
-      end
-
-      xit 'works with first column' do
-        
-      end
-
-      xit 'works with second column' do
-        
-      end
-
-      xit 'works with third column' do
-        
-      end
-
-      xit 'works with main diagonal' do
-        
-      end
-
-      xit 'works with secondary diagonal' do
-        
+      it 'contains only strings' do
+        expect(board.matrix_board.flatten).to all(be_a(String))
       end
     end
-
-
   end
 end

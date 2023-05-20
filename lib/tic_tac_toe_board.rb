@@ -2,33 +2,13 @@
 
 class Board
   attr_accessor :available
-  attr_reader :matrix
+  attr_reader :matrix_board
 
-  def initialize
-    @matrix = [
-      %w[1 2 3],
-      %w[4 5 6],
-      %w[7 8 9]
-    ]
+  def initialize(matrix_board = [ %w[1 2 3],
+                                  %w[4 5 6],
+                                  %w[7 8 9] ])
+    @matrix_board = matrix_board
     @available = %w[1 2 3 4 5 6 7 8 9]
-  end
-
-  def player_turn
-    loop do
-      @guess = verify_input(player_input)
-      break if @guess
-
-      puts 'Input error!'
-    end
-  end
-
-  def verify_input(number)
-    return number if number.match?(/^[1-9]$/)
-  end
-
-  def player_input
-    puts 'Choose a digit between 0 and 9'
-    gets.chomp
   end
 
   def play_game
@@ -42,16 +22,31 @@ class Board
     player_turn
     cpu_turn
   end
+  ## recomecar codigo pelos testes amanha
+  def player_turn
+    loop do
+      move = verify_input(player_input)
+      break if move
+
+      puts 'Input error!'
+    end
+  end
+
+  def verify_input(number)
+    return number if number.match?(/^[1-9]$/)
+  end
+
+
 
   def play_game
-    until game_over?
+    until game_game_over?
       print_board
       player_move = player_move
       mark(player_move, 'player')
-      over?
+      game_over?
       cpu_move = cpu_move
       mark(cpu_move, 'cpu')
-      over?
+      game_over?
     end
   end
 
@@ -78,7 +73,7 @@ class Board
   def mark(move, gamer)
     marker = gamer == 'player' ? 'X' : 'O'
 
-    @matrix.each do |line|
+    @matrix_board.each do |line|
       if line.include?(move)
         move_index = line.find_index(move)
         line[move_index] = marker
@@ -86,20 +81,20 @@ class Board
     end
   end
 
-  def over?
-    return if @game_over == true
-
-    if @available.empty?
-      @game_over = true
-      return 'Draw'
-    end
-    lines_equal?
-    columns_equal?
-    first_diagonal_equal?
+  def game_over?
+    available.empty? ||
+    lines_equal? ||
+    columns_equal? ||
+    first_diagonal_equal? ||
     second_diagonal_equal?
   end
 
   private
+
+  def player_input
+    puts 'Choose a digit between 0 and 9'
+    gets.chomp
+  end
 
   def final_message
     puts 'This is the final message'
@@ -117,41 +112,40 @@ class Board
   end
 
   def print_line(num)
-    print @matrix[num][0], '  |  ', @matrix[num][1], '  |  '
-    puts @matrix[num][2], '-------------'
+    print @matrix_board[num][0], '  |  ', @matrix_board[num][1], '  |  '
+    puts @matrix_board[num][2], '-------------'
+  end
+
+  def all_equal?(arr)
+    arr.uniq.size <= 1
   end
 
   def first_diagonal_equal?
-    return unless @matrix[0][0] == @matrix[1][1] && @matrix[1][1] == @matrix[2][2]
+    return unless @matrix_board[0][0] == @matrix_board[1][1] && @matrix_board[1][1] == @matrix_board[2][2]
 
     @game_over = true
-    winner = @matrix[0][0]
+    winner = @matrix_board[0][0]
     puts '', "Game Over, #{winner} won", ''
     print_board
   end
 
   def second_diagonal_equal?
-    return unless @matrix[0][2] == @matrix[1][1] && @matrix[1][1] == @matrix[2][0]
+    return unless @matrix_board[0][2] == @matrix_board[1][1] && @matrix_board[1][1] == @matrix_board[2][0]
 
     @game_over = true
-    winner = @matrix[0][2]
+    winner = @matrix_board[0][2]
     puts '', "Game Over, #{winner} won", ''
     print_board
   end
 
   def lines_equal?
-    @matrix.each do |line|
-      next unless line.minmax.reduce(&:eql?)
-
-      @game_over = true
-      winner = line[0]
-      puts '', "Game Over, #{winner} won", ''
-      print_board
+    @matrix_board.each do |line|
+      next unless line.all_equal?
     end
   end
 
   def columns_equal?
-    @matrix.transpose.each do |line|
+    @matrix_board.transpose.each do |line|
       next unless line.minmax.reduce(&:eql?)
 
       @game_over = true
