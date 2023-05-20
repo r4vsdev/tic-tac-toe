@@ -2,7 +2,7 @@
 
 class Board
   attr_accessor :available
-  attr_reader :matrix, :game_over
+  attr_reader :matrix
 
   def initialize
     @matrix = [
@@ -12,6 +12,18 @@ class Board
     ]
     @available = %w[1 2 3 4 5 6 7 8 9]
     @game_over = false
+  end
+
+  def play_game
+    until game_over
+      print_it
+      player_move = player_move
+      mark(player_move, 'player')
+      over?
+      cpu_move = cpu_move
+      mark(cpu_move, 'cpu')
+      over?
+    end
   end
 
   def print_it
