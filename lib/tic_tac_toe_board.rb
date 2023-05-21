@@ -22,7 +22,7 @@ class Board
     player_turn
     cpu_turn
   end
-  ## recomecar codigo pelos testes amanha
+  ## os testes tao verdes, mas parecem irreais/errados
   def player_turn
     loop do
       move = verify_input(player_input)
@@ -82,11 +82,13 @@ class Board
   end
 
   def game_over?
-    available.empty? # ||
-    # lines_equal? ||
-    # columns_equal? ||
-    # first_diagonal_equal? ||
-    # second_diagonal_equal?
+    [
+      available.empty?, 
+      lines_equal?, 
+      columns_equal?, 
+      first_diagonal_equal?, 
+      second_diagonal_equal?
+    ].any?
   end
 
   private
@@ -140,8 +142,11 @@ class Board
 
   def lines_equal?
     @matrix_board.each do |line|
-      next unless line.all_equal?
+      if all_equal?(line)
+        return true
+      end
     end
+    return false
   end
 
   def columns_equal?

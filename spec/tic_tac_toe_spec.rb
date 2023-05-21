@@ -53,4 +53,69 @@ describe Board do
     end
   end
 
+  describe '#game_over?' do
+    
+    subject { described_class.new }
+    
+    context 'when there are no more moves available' do
+      before do
+        allow(subject.available).to receive(:empty?).and_return(true)
+        allow(subject).to receive(:lines_equal?).and_return(false)
+        allow(subject).to receive(:columns_equal?).and_return(false)
+        allow(subject).to receive(:first_diagonal_equal?).and_return(false)
+        allow(subject).to receive(:second_diagonal_equal?).and_return(false)
+      end
+      
+      it { should be_game_over }
+    end
+
+    context 'when one of the lines is equal' do
+      before do
+        allow(subject.available).to receive(:empty?).and_return(false)
+        allow(subject).to receive(:lines_equal?).and_return(true)
+        allow(subject).to receive(:columns_equal?).and_return(false)
+        allow(subject).to receive(:first_diagonal_equal?).and_return(false)
+        allow(subject).to receive(:second_diagonal_equal?).and_return(false)
+      end
+
+      it { should be_game_over }
+    end
+
+    context 'when one of the columns is equal' do
+      before do
+        allow(subject.available).to receive(:empty?).and_return(false)
+        allow(subject).to receive(:lines_equal?).and_return(false)
+        allow(subject).to receive(:columns_equal?).and_return(true)
+        allow(subject).to receive(:first_diagonal_equal?).and_return(false)
+        allow(subject).to receive(:second_diagonal_equal?).and_return(false)
+      end
+
+      it { should be_game_over }
+    end
+
+    context 'when first diagonal is equal' do
+      before do
+        allow(subject.available).to receive(:empty?).and_return(false)
+        allow(subject).to receive(:lines_equal?).and_return(false)
+        allow(subject).to receive(:columns_equal?).and_return(false)
+        allow(subject).to receive(:first_diagonal_equal?).and_return(true)
+        allow(subject).to receive(:second_diagonal_equal?).and_return(false)
+      end
+
+      it { should be_game_over }
+    end
+
+    context 'when second diagonal is equal' do
+      before do
+        allow(subject.available).to receive(:empty?).and_return(false)
+        allow(subject).to receive(:lines_equal?).and_return(false)
+        allow(subject).to receive(:columns_equal?).and_return(false)
+        allow(subject).to receive(:first_diagonal_equal?).and_return(false)
+        allow(subject).to receive(:second_diagonal_equal?).and_return(true)
+      end
+
+      it { should be_game_over }
+    end
+  end
+
 end
