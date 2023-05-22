@@ -234,4 +234,36 @@ describe Board do
     end
   end
 
+  describe 'player_turn' do
+    context 'when user input is valid' do
+      it 'does not show error message' do 
+        valid_input = '3'
+        allow(subject).to receive(:player_input).and_return(valid_input)
+        expect(subject).not_to receive(:puts).with('Input error!')
+        subject.player_turn
+      end
+    end
+
+    context 'when user input is invalid, then valid' do
+      it 'shows error message once' do 
+        valid_input = '3'
+        letter = 'l'
+        allow(subject).to receive(:player_input).and_return(letter, valid_input)
+        expect(subject).to receive(:puts).with('Input error!').once
+        subject.player_turn
+      end
+    end
+    
+    context 'when user input is 2x invalid, then valid' do
+      it 'shows error message twice' do 
+        valid_input = '3'
+        letter = 'l'
+        invalid_input  = '10'
+        allow(subject).to receive(:player_input).and_return(letter, invalid_input, valid_input)
+        expect(subject).to receive(:puts).with('Input error!').twice
+        subject.player_turn
+      end
+    end
+  end
+
 end
