@@ -234,12 +234,19 @@ describe Board do
     end
   end
 
-  describe 'player_turn' do
+  describe '#player_turn' do
     context 'when user input is valid' do
-      it 'does not show error message' do 
+      it 'does not show error message' do
         valid_input = '3'
         allow(subject).to receive(:player_input).and_return(valid_input)
         expect(subject).not_to receive(:puts).with('Input error!')
+        subject.player_turn
+      end
+
+      it 'calls mark once' do
+        valid_input = '3'
+        allow(subject).to receive(:player_input).and_return(valid_input)
+        expect(subject).to receive(:mark).with(valid_input, 'player').once
         subject.player_turn
       end
     end

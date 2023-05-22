@@ -26,7 +26,10 @@ class Board
   def player_turn
     loop do
       player_move = verify_input(player_input)
-      break if player_move
+      if player_move
+        mark(player_move, 'player')
+        break
+      end
 
       puts 'Input error!'
     end
