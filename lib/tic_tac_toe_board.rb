@@ -22,7 +22,7 @@ class Board
     player_turn
     cpu_turn
   end
-  ## os testes tao verdes, mas parecem irreais/errados
+  
   def player_turn
     loop do
       move = verify_input(player_input)
@@ -91,7 +91,7 @@ class Board
     ].any?
   end
 
-  private
+  # private
 
   def player_input
     puts 'Choose a digit between 0 and 9'
@@ -122,15 +122,6 @@ class Board
     arr.uniq.size <= 1
   end
 
-  def first_diagonal_equal?
-    return unless @matrix_board[0][0] == @matrix_board[1][1] && @matrix_board[1][1] == @matrix_board[2][2]
-
-    @game_over = true
-    winner = @matrix_board[0][0]
-    puts '', "Game Over, #{winner} won", ''
-    print_board
-  end
-
   def second_diagonal_equal?
     return unless @matrix_board[0][2] == @matrix_board[1][1] && @matrix_board[1][1] == @matrix_board[2][0]
 
@@ -142,21 +133,20 @@ class Board
 
   def lines_equal?
     @matrix_board.each do |line|
-      if all_equal?(line)
-        return true
-      end
+      return true if all_equal?(line)
     end
     return false
   end
 
   def columns_equal?
     @matrix_board.transpose.each do |line|
-      next unless line.minmax.reduce(&:eql?)
-
-      @game_over = true
-      winner = line[0]
-      puts '', "Game Over, #{winner} won", ''
-      print_board
+      return true if all_equal?(line)
     end
+    return false
+  end
+
+  def first_diagonal_equal?
+    @matrix_board[0][0] == @matrix_board[1][1] && @matrix_board[1][1] == @matrix_board[2][2] ? true : false
+
   end
 end

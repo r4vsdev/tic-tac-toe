@@ -48,8 +48,6 @@ describe Board do
           expect(game_third_line.matrix_board[2]).to eq(%w[X X X])
         end
       end
-
-
     end
   end
 
@@ -117,5 +115,57 @@ describe Board do
       it { should be_game_over }
     end
   end
+
+  describe '#lines_equal?' do
+    context 'when first line is equal' do
+      subject { described_class.new([ %w[X X X], %w[4 5 6], %w[7 8 9] ]) }
+      
+      it { should be_lines_equal }
+    end
+
+    context 'when second line is equal' do
+      subject { described_class.new([%w[1 2 3], %w[X X X], %w[7 8 9] ]) }
+      
+      it { should be_lines_equal }
+    end
+
+    context 'when third line is equal' do
+      subject { described_class.new([%w[1 2 3], %w[4 5 6], %w[X X X] ]) }
+      
+      it { should be_lines_equal }
+    end
+
+    context 'when no line is equal' do
+      subject { described_class.new }
+      
+      it { should_not be_lines_equal }
+    end
+  end
+
+  describe '#columns_equal?' do
+    context 'when first column is equal' do
+      subject { described_class.new([ %w[X 2 3], %w[X 5 6], %w[X 8 9] ]) }
+      
+      it { should be_columns_equal }
+    end
+
+    context 'when second column is equal' do
+      subject { described_class.new([%w[1 X 3], %w[4 X 6], %w[7 X 9] ]) }
+      
+      it { should be_columns_equal }
+    end
+
+    context 'when third column is equal' do
+      subject { described_class.new([%w[1 2 X], %w[4 5 X], %w[7 8 X] ]) }
+      
+      it { should be_columns_equal }
+    end
+
+    context 'when no column is equal' do
+      subject { described_class.new }
+      
+      it { should_not be_columns_equal }
+    end
+end
 
 end
