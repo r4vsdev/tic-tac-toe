@@ -292,4 +292,33 @@ describe Board do
     end
   end
 
+  describe '#mark' do
+    subject { described_class.new }
+    
+    context 'when valid input is given by the player' do
+      it 'marks X on the given input' do
+        valid_input = '1'
+        initial_board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
+        changed_board = [%w[X 2 3], %w[4 5 6], %w[7 8 9]]
+        expect { 
+          subject.mark(valid_input, 'player') 
+        }.to change { subject.matrix_board }.from(initial_board).to(changed_board)
+      end
+    end
+
+    context 'when valid input is given by the CPU' do
+      it 'marks O on the given input' do
+        valid_input = '3'
+        initial_board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
+        changed_board = [%w[1 2 O], %w[4 5 6], %w[7 8 9]]
+        expect { 
+          subject.mark(valid_input, 'CPU') 
+        }.to change { subject.matrix_board }.from(initial_board).to(changed_board)
+      end
+    end
+  end
+
+  describe '' do
+    
+  end
 end
