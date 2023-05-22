@@ -318,7 +318,19 @@ describe Board do
     end
   end
 
-  describe '' do
-    
+  describe '#final_message' do
+    context 'when the player wins' do
+      it 'outputs the correct phrase' do
+        
+      end
+    end
+
+    context 'when the CPU wins' do
+      
+    end
+
+    context 'when there is no winner' do
+      
+    end
   end
 end

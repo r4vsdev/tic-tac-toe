@@ -9,6 +9,7 @@ class Board
                                   %w[7 8 9] ])
     @matrix_board = matrix_board
     @available = %w[1 2 3 4 5 6 7 8 9]
+    @winner = nil
   end
 
   def play_game
@@ -21,11 +22,19 @@ class Board
   def turn_order
     player_turn
     if game_over?
-      return 'Player won'
+      @winner = 'Player'
+      return "#{@winner} won"
     else
       print_board
     end
     cpu_turn
+    if game_over?
+      @winner = 'CPU'
+      return "#{@winner} won"
+    else
+      puts '', @cpu_move, ''
+      print_board
+    end
   end
   
   def player_turn
@@ -46,9 +55,9 @@ class Board
   end
 
   def cpu_turn
-    cpu_move = verify_input(@available.sample)
-    mark(cpu_move, 'CPU')
-    @available.delete(cpu_move)
+    @cpu_move = verify_input(@available.sample)
+    mark(@cpu_move, 'CPU')
+    @available.delete(@cpu_move)
   end
 
 
@@ -115,7 +124,13 @@ class Board
   end
 
   def final_message
-    puts 'This is the final message'
+    if @winner == 'Player'
+      puts 'Congratulations! You Won! =)'
+    elsif @winner == 'CPU'
+      puts 'That is sad! The CPU Won =('
+    elsif winner.nil?
+      puts 'Seens like we ran out of moves.'      
+    end
   end
 
   def intro
