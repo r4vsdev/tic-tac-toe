@@ -204,4 +204,34 @@ describe Board do
     end
   end
 
+  describe '#verify_input' do
+    context 'when given a low valid number' do
+      it 'returns valid number' do
+        valid_number = '1'
+        expect(subject.verify_input(valid_number)).to eq('1')
+      end
+    end
+
+    context 'when given a high valid number' do
+      it 'returns valid number' do
+        valid_number = '9'
+        expect(subject.verify_input(valid_number)).to eq('9')
+      end
+    end
+
+    context 'when given an invalid number' do
+      it 'returns nils' do
+        invalid_number = '10'
+        expect(subject.verify_input(invalid_number)).to be_nil
+      end
+    end
+
+    context 'when given a letter' do
+      it 'returns nils' do
+        letter = 'l'
+        expect(subject.verify_input(letter)).to be_nil
+      end
+    end
+  end
+
 end

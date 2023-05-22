@@ -39,7 +39,7 @@ class Board
 
 
   def play_game
-    until game_game_over?
+    until game_over?
       print_board
       player_move = player_move
       mark(player_move, 'player')
