@@ -273,4 +273,23 @@ describe Board do
     end
   end
 
+  describe '#cpu_turn' do
+    context 'when the chosen input is valid' do
+      it 'calls mark once' do
+        valid_input = '4'
+        allow(subject).to receive(:verify_input).and_return(valid_input)
+        expect(subject).to receive(:mark).with(valid_input, 'CPU').once
+        subject.cpu_turn
+      end
+
+      it 'deletes cpu_move from @available array' do
+        valid_input = '4'
+        allow(subject).to receive(:verify_input).and_return(valid_input)
+        allow(subject).to receive(:available).and_return(%w(1 2 4))
+        expect(subject.available.delete(valid_input)).to eq(valid_input)
+        subject.cpu_turn
+      end
+    end
+  end
+
 end

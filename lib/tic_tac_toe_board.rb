@@ -28,6 +28,7 @@ class Board
       player_move = verify_input(player_input)
       if player_move
         mark(player_move, 'player')
+        @available.delete(player_move)
         break
       end
 
@@ -36,7 +37,13 @@ class Board
   end
 
   def verify_input(number)
-    return number if number.match?(/^[1-9]$/)
+    return number if number.match?(/^[1-9]$/) && @available.include?(number)
+  end
+
+  def cpu_turn
+    cpu_move = verify_input(@available.sample)
+    mark(cpu_move, 'CPU')
+    @available.delete(cpu_move)
   end
 
 
