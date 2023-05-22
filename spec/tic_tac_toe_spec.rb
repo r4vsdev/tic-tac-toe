@@ -186,4 +186,22 @@ describe Board do
     end
   end
 
+  describe '#second_diagonal_equal?' do
+    context 'when second diagonal is equal' do
+      subject { described_class.new([ %w[1 2 X], %w[4 X 6], %w[X 8 9] ]) }
+
+      it { should be_second_diagonal_equal }
+    end
+
+    context 'when first diagonal is equal' do
+      subject { described_class.new([ %w[X 2 3], %w[4 X 6], %w[7 8 X] ]) }
+
+      it { should_not be_second_diagonal_equal }
+    end
+
+    context 'when no diagonal is equal' do
+      it { should_not be_second_diagonal_equal }
+    end
+  end
+
 end

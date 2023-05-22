@@ -122,15 +122,6 @@ class Board
     arr.uniq.size <= 1
   end
 
-  def second_diagonal_equal?
-    return unless @matrix_board[0][2] == @matrix_board[1][1] && @matrix_board[1][1] == @matrix_board[2][0]
-
-    @game_over = true
-    winner = @matrix_board[0][2]
-    puts '', "Game Over, #{winner} won", ''
-    print_board
-  end
-
   def lines_equal?
     @matrix_board.each do |line|
       return true if all_equal?(line)
@@ -148,4 +139,10 @@ class Board
   def first_diagonal_equal?
     @matrix_board[0][0] == @matrix_board[1][1] && @matrix_board[1][1] == @matrix_board[2][2] ? true : false
   end
+
+  def second_diagonal_equal?
+    @matrix_board[0][2] == @matrix_board[1][1] && @matrix_board[1][1] == @matrix_board[2][0] ? true : false
+  end
+
+
 end
