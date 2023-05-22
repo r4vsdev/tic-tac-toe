@@ -4,6 +4,8 @@ require_relative '../lib/tic_tac_toe_board'
 
 
 describe Board do
+  subject { described_class.new }
+
   describe '#initialize' do
     context 'when matrix_board is initialized on default' do
       subject(:board) { described_class.new }
@@ -161,11 +163,27 @@ describe Board do
       it { should be_columns_equal }
     end
 
-    context 'when no column is equal' do
-      subject { described_class.new }
-      
+    context 'when no column is equal' do      
       it { should_not be_columns_equal }
     end
-end
+  end
+
+  describe '#first_diagonal_equal?' do
+    context 'when first diagonal is equal' do
+      subject { described_class.new([ %w[X 2 3], %w[4 X 6], %w[7 8 X] ]) }
+
+      it { should be_first_diagonal_equal }
+    end
+
+    context 'when second diagonal is equal' do
+      subject { described_class.new([ %w[1 2 X], %w[4 X 6], %w[X 8 9] ]) }
+
+      it { should_not be_first_diagonal_equal }
+    end
+
+    context 'when no diagonal is equal' do
+      it { should_not be_first_diagonal_equal }
+    end
+  end
 
 end

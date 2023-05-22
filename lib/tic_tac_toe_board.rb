@@ -147,6 +147,5 @@ class Board
 
   def first_diagonal_equal?
     @matrix_board[0][0] == @matrix_board[1][1] && @matrix_board[1][1] == @matrix_board[2][2] ? true : false
-
   end
 end
