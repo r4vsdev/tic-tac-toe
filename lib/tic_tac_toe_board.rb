@@ -18,23 +18,19 @@ class Board
     turn_order until game_over?
     final_message
   end
-
+  #qnd cpu ganha, nao ta mostrando o @cpu_move nem o board na tela
   def turn_order
     player_turn
-    if game_over?
-      @winner = 'Player'
-      return "#{@winner} won"
-    else
-      print_board
-    end
+    return @winner = 'Player' if game_over?
+    print_board
     cpu_turn
     if game_over?
-      @winner = 'CPU'
-      return "#{@winner} won"
-    else
       puts '', @cpu_move, ''
       print_board
+      return @winner = 'CPU' 
     end
+    puts '', @cpu_move, ''
+    print_board
   end
   
   def player_turn
@@ -45,7 +41,6 @@ class Board
         @available.delete(player_move)
         break
       end
-
       puts 'Input error!'
     end
   end
