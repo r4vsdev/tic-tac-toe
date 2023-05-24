@@ -19,7 +19,8 @@ class Board
     final_message
   end
 
-  # qnd cpu ganha, nao ta mostrando o @cpu_move nem o board na tela
+  # private
+
   def turn_order
     player_turn
     return @winner = 'Player' if game_over?
@@ -57,39 +58,6 @@ class Board
     @available.delete(@cpu_move)
   end
 
-  # TO DO: TESTAR O JOGO AMANHA
-  # def play_game
-  #   until game_over?
-  #     print_board
-  #     player_move = player_move
-  #     mark(player_move, 'player')
-  #     game_over?
-  #     cpu_move = cpu_move
-  #     mark(cpu_move, 'cpu')
-  #     game_over?
-  #   end
-  # end
-
-  # def player_move
-  #   puts 'Choose from 1-9 to make your move'
-  #   @player_move = gets.chomp
-  #   if @available.include?(@player_move)
-  #     @available.delete(@player_move)
-  #     @player_move
-  #   else
-  #     puts "The position #{@player_move} is already marked, choose another"
-  #     player_move
-  #   end
-  # end
-
-  # def cpu_move
-  #   return '' if @game_over
-
-  #   @cpu_move = @available.sample
-  #   @available.delete(@cpu_move)
-  #   @cpu_move
-  # end
-
   def mark(move, gamer)
     marker = gamer == 'player' ? 'X' : 'O'
 
@@ -111,14 +79,6 @@ class Board
     ].any?
   end
 
-  # private
-
-  def player_input
-    puts ''
-    puts 'Choose a digit between 0 and 9'
-    gets.chomp
-  end
-
   def final_message
     if @winner == 'Player'
       puts 'Congratulations! You Won! =)'
@@ -127,6 +87,12 @@ class Board
     elsif @winner.nil?
       puts 'Seens like we ran out of moves.'
     end
+  end
+
+  def player_input
+    puts ''
+    puts 'Choose a digit between 0 and 9'
+    gets.chomp
   end
 
   def intro
@@ -156,14 +122,14 @@ class Board
     @matrix_board.each do |line|
       return true if all_equal?(line)
     end
-    return false
+    false
   end
 
   def columns_equal?
     @matrix_board.transpose.each do |line|
       return true if all_equal?(line)
     end
-    return false
+    false
   end
 
   def first_diagonal_equal?

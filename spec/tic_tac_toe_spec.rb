@@ -24,33 +24,33 @@ describe Board do
 
     context 'when given a specific board' do
       context 'when the first line is specified' do
-        subject(:game_first_line) {
+        subject(:game_first_line) do
           described_class.new([%w[X X X],
                                %w[4 5 6],
                                %w[7 8 9]])
-        }
+        end
         it 'returns X X X on the first array' do
           expect(game_first_line.matrix_board[0]).to eq(%w[X X X])
         end
       end
 
       context 'when the second line is specified' do
-        subject(:game_second_line) {
+        subject(:game_second_line) do
           described_class.new([%w[1 2 3],
                                %w[X X X],
                                %w[7 8 9]])
-        }
+        end
         it 'returns X X X on the second array' do
           expect(game_second_line.matrix_board[1]).to eq(%w[X X X])
         end
       end
 
       context 'when the third line is specified' do
-        subject(:game_third_line) {
+        subject(:game_third_line) do
           described_class.new([%w[1 2 3],
                                %w[4 5 6],
                                %w[X X X]])
-        }
+        end
         it 'returns X X X on the third array' do
           expect(game_third_line.matrix_board[2]).to eq(%w[X X X])
         end
@@ -289,7 +289,7 @@ describe Board do
       it 'deletes cpu_move from @available array' do
         valid_input = '4'
         allow(subject).to receive(:verify_input).and_return(valid_input)
-        allow(subject).to receive(:available).and_return(%w(1 2 4))
+        allow(subject).to receive(:available).and_return(%w[1 2 4])
         expect(subject.available.delete(valid_input)).to eq(valid_input)
         subject.cpu_turn
       end
@@ -304,9 +304,9 @@ describe Board do
         valid_input = '1'
         initial_board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
         changed_board = [%w[X 2 3], %w[4 5 6], %w[7 8 9]]
-        expect {
+        expect do
           subject.mark(valid_input, 'player')
-        }.to change { subject.matrix_board }.from(initial_board).to(changed_board)
+        end.to change { subject.matrix_board }.from(initial_board).to(changed_board)
       end
     end
 
@@ -315,9 +315,9 @@ describe Board do
         valid_input = '3'
         initial_board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
         changed_board = [%w[1 2 O], %w[4 5 6], %w[7 8 9]]
-        expect {
+        expect do
           subject.mark(valid_input, 'CPU')
-        }.to change { subject.matrix_board }.from(initial_board).to(changed_board)
+        end.to change { subject.matrix_board }.from(initial_board).to(changed_board)
       end
     end
   end
