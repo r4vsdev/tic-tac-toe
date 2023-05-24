@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class Board
-  attr_accessor :available
+  attr_accessor :available, :winner
   attr_reader :matrix_board
 
-  def initialize(matrix_board = [ %w[1 2 3],
-                                  %w[4 5 6],
-                                  %w[7 8 9] ])
+  def initialize(matrix_board = [%w[1 2 3],
+                                 %w[4 5 6],
+                                 %w[7 8 9]], winner = nil)
     @matrix_board = matrix_board
     @available = %w[1 2 3 4 5 6 7 8 9]
-    @winner = nil
+    @winner = winner
   end
 
   def play_game
@@ -18,21 +18,23 @@ class Board
     turn_order until game_over?
     final_message
   end
-  #qnd cpu ganha, nao ta mostrando o @cpu_move nem o board na tela
+
+  # qnd cpu ganha, nao ta mostrando o @cpu_move nem o board na tela
   def turn_order
     player_turn
     return @winner = 'Player' if game_over?
+
     print_board
     cpu_turn
     if game_over?
       puts '', @cpu_move, ''
       print_board
-      return @winner = 'CPU' 
+      return @winner = 'CPU'
     end
     puts '', @cpu_move, ''
     print_board
   end
-  
+
   def player_turn
     loop do
       player_move = verify_input(player_input)
@@ -55,8 +57,7 @@ class Board
     @available.delete(@cpu_move)
   end
 
-
-# TO DO: TESTAR O JOGO AMANHA
+  # TO DO: TESTAR O JOGO AMANHA
   # def play_game
   #   until game_over?
   #     print_board
@@ -102,10 +103,10 @@ class Board
 
   def game_over?
     [
-      available.empty?, 
-      lines_equal?, 
-      columns_equal?, 
-      first_diagonal_equal?, 
+      available.empty?,
+      lines_equal?,
+      columns_equal?,
+      first_diagonal_equal?,
       second_diagonal_equal?
     ].any?
   end
@@ -123,8 +124,8 @@ class Board
       puts 'Congratulations! You Won! =)'
     elsif @winner == 'CPU'
       puts 'That is sad! The CPU Won =('
-    elsif winner.nil?
-      puts 'Seens like we ran out of moves.'      
+    elsif @winner.nil?
+      puts 'Seens like we ran out of moves.'
     end
   end
 
@@ -143,6 +144,7 @@ class Board
     print @matrix_board[num][0], '  |  ', @matrix_board[num][1], '  |  '
     puts @matrix_board[num][2]
     return if num == 2
+
     puts '-------------'
   end
 
@@ -171,6 +173,4 @@ class Board
   def second_diagonal_equal?
     @matrix_board[0][2] == @matrix_board[1][1] && @matrix_board[1][1] == @matrix_board[2][0] ? true : false
   end
-
-
 end

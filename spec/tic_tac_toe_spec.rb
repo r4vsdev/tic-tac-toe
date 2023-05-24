@@ -2,7 +2,6 @@
 
 require_relative '../lib/tic_tac_toe_board'
 
-
 describe Board do
   subject { described_class.new }
 
@@ -25,27 +24,33 @@ describe Board do
 
     context 'when given a specific board' do
       context 'when the first line is specified' do
-        subject(:game_first_line) { described_class.new([ %w[X X X], 
-                                                          %w[4 5 6], 
-                                                          %w[7 8 9] ]) }
+        subject(:game_first_line) {
+          described_class.new([%w[X X X],
+                               %w[4 5 6],
+                               %w[7 8 9]])
+        }
         it 'returns X X X on the first array' do
           expect(game_first_line.matrix_board[0]).to eq(%w[X X X])
         end
       end
 
       context 'when the second line is specified' do
-        subject(:game_second_line) { described_class.new([%w[1 2 3], 
-                                                          %w[X X X], 
-                                                          %w[7 8 9] ]) }
+        subject(:game_second_line) {
+          described_class.new([%w[1 2 3],
+                               %w[X X X],
+                               %w[7 8 9]])
+        }
         it 'returns X X X on the second array' do
           expect(game_second_line.matrix_board[1]).to eq(%w[X X X])
         end
       end
 
       context 'when the third line is specified' do
-        subject(:game_third_line) { described_class.new([%w[1 2 3], 
-                                                         %w[4 5 6], 
-                                                         %w[X X X] ]) }
+        subject(:game_third_line) {
+          described_class.new([%w[1 2 3],
+                               %w[4 5 6],
+                               %w[X X X]])
+        }
         it 'returns X X X on the third array' do
           expect(game_third_line.matrix_board[2]).to eq(%w[X X X])
         end
@@ -54,9 +59,8 @@ describe Board do
   end
 
   describe '#game_over?' do
-    
     subject { described_class.new }
-    
+
     context 'when there are no more moves available' do
       before do
         allow(subject.available).to receive(:empty?).and_return(true)
@@ -65,7 +69,7 @@ describe Board do
         allow(subject).to receive(:first_diagonal_equal?).and_return(false)
         allow(subject).to receive(:second_diagonal_equal?).and_return(false)
       end
-      
+
       it { should be_game_over }
     end
 
@@ -120,63 +124,63 @@ describe Board do
 
   describe '#lines_equal?' do
     context 'when first line is equal' do
-      subject { described_class.new([ %w[X X X], %w[4 5 6], %w[7 8 9] ]) }
-      
+      subject { described_class.new([%w[X X X], %w[4 5 6], %w[7 8 9]]) }
+
       it { should be_lines_equal }
     end
 
     context 'when second line is equal' do
-      subject { described_class.new([%w[1 2 3], %w[X X X], %w[7 8 9] ]) }
-      
+      subject { described_class.new([%w[1 2 3], %w[X X X], %w[7 8 9]]) }
+
       it { should be_lines_equal }
     end
 
     context 'when third line is equal' do
-      subject { described_class.new([%w[1 2 3], %w[4 5 6], %w[X X X] ]) }
-      
+      subject { described_class.new([%w[1 2 3], %w[4 5 6], %w[X X X]]) }
+
       it { should be_lines_equal }
     end
 
     context 'when no line is equal' do
       subject { described_class.new }
-      
+
       it { should_not be_lines_equal }
     end
   end
 
   describe '#columns_equal?' do
     context 'when first column is equal' do
-      subject { described_class.new([ %w[X 2 3], %w[X 5 6], %w[X 8 9] ]) }
-      
+      subject { described_class.new([%w[X 2 3], %w[X 5 6], %w[X 8 9]]) }
+
       it { should be_columns_equal }
     end
 
     context 'when second column is equal' do
-      subject { described_class.new([%w[1 X 3], %w[4 X 6], %w[7 X 9] ]) }
-      
+      subject { described_class.new([%w[1 X 3], %w[4 X 6], %w[7 X 9]]) }
+
       it { should be_columns_equal }
     end
 
     context 'when third column is equal' do
-      subject { described_class.new([%w[1 2 X], %w[4 5 X], %w[7 8 X] ]) }
-      
+      subject { described_class.new([%w[1 2 X], %w[4 5 X], %w[7 8 X]]) }
+
       it { should be_columns_equal }
     end
 
-    context 'when no column is equal' do      
+    context 'when no column is equal' do
       it { should_not be_columns_equal }
     end
   end
 
   describe '#first_diagonal_equal?' do
     context 'when first diagonal is equal' do
-      subject { described_class.new([ %w[X 2 3], %w[4 X 6], %w[7 8 X] ]) }
+      subject { described_class.new([%w[X 2 3], %w[4 X 6], %w[7 8 X]]) }
 
       it { should be_first_diagonal_equal }
     end
 
     context 'when second diagonal is equal' do
-      subject { described_class.new([ %w[1 2 X], %w[4 X 6], %w[X 8 9] ]) }
+      subject { described_class.new([%w[1 2 X], %w[4 X 6], %w[X 8 9]]) }
 
       it { should_not be_first_diagonal_equal }
     end
@@ -188,13 +192,13 @@ describe Board do
 
   describe '#second_diagonal_equal?' do
     context 'when second diagonal is equal' do
-      subject { described_class.new([ %w[1 2 X], %w[4 X 6], %w[X 8 9] ]) }
+      subject { described_class.new([%w[1 2 X], %w[4 X 6], %w[X 8 9]]) }
 
       it { should be_second_diagonal_equal }
     end
 
     context 'when first diagonal is equal' do
-      subject { described_class.new([ %w[X 2 3], %w[4 X 6], %w[7 8 X] ]) }
+      subject { described_class.new([%w[X 2 3], %w[4 X 6], %w[7 8 X]]) }
 
       it { should_not be_second_diagonal_equal }
     end
@@ -252,7 +256,7 @@ describe Board do
     end
 
     context 'when user input is invalid, then valid' do
-      it 'shows error message once' do 
+      it 'shows error message once' do
         valid_input = '3'
         letter = 'l'
         allow(subject).to receive(:player_input).and_return(letter, valid_input)
@@ -260,12 +264,12 @@ describe Board do
         subject.player_turn
       end
     end
-    
+
     context 'when user input is 2x invalid, then valid' do
-      it 'shows error message twice' do 
+      it 'shows error message twice' do
         valid_input = '3'
         letter = 'l'
-        invalid_input  = '10'
+        invalid_input = '10'
         allow(subject).to receive(:player_input).and_return(letter, invalid_input, valid_input)
         expect(subject).to receive(:puts).with('Input error!').twice
         subject.player_turn
@@ -294,14 +298,14 @@ describe Board do
 
   describe '#mark' do
     subject { described_class.new }
-    
+
     context 'when valid input is given by the player' do
       it 'marks X on the given input' do
         valid_input = '1'
         initial_board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
         changed_board = [%w[X 2 3], %w[4 5 6], %w[7 8 9]]
-        expect { 
-          subject.mark(valid_input, 'player') 
+        expect {
+          subject.mark(valid_input, 'player')
         }.to change { subject.matrix_board }.from(initial_board).to(changed_board)
       end
     end
@@ -311,8 +315,8 @@ describe Board do
         valid_input = '3'
         initial_board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
         changed_board = [%w[1 2 O], %w[4 5 6], %w[7 8 9]]
-        expect { 
-          subject.mark(valid_input, 'CPU') 
+        expect {
+          subject.mark(valid_input, 'CPU')
         }.to change { subject.matrix_board }.from(initial_board).to(changed_board)
       end
     end
@@ -320,17 +324,29 @@ describe Board do
 
   describe '#final_message' do
     context 'when the player wins' do
+      subject { described_class.new([%w[X X X], %w[4 5 6], %w[7 8 9]], winner = 'Player') }
+
       it 'outputs the correct phrase' do
-        
+        winning_phrase = "Congratulations! You Won! =)\n"
+        expect { subject.final_message }.to output(winning_phrase).to_stdout
       end
     end
 
     context 'when the CPU wins' do
-      
+      subject { described_class.new([%w[O O O], %w[4 5 6], %w[7 8 9]], winner = 'CPU') }
+
+      it 'outputs the correct phrase' do
+        losing_phrase = "That is sad! The CPU Won =(\n"
+        expect { subject.final_message }.to output(losing_phrase).to_stdout
+      end
     end
 
     context 'when there is no winner' do
-      
+      subject { described_class.new([%w[1 2 3], %w[4 5 6], %w[7 8 9]]) }
+
+      it 'outputs the correct phrase' do
+        expect { subject.final_message }.to output("Seens like we ran out of moves.\n").to_stdout
+      end
     end
   end
 end
